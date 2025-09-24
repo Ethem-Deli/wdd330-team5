@@ -38,6 +38,19 @@ export function getParam(param) {
 }
 
 // Rendering Helpers
+
+// -------------------------
+
+// render a list of items using a template function
+// inserts all items into a parentElement at a chosen position
+export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
+  clear ? parentElement.innerHTML = "" : 0;
+  const htmlStrings = list?.map(templateFn);
+  if (clear) {
+    parentElement.innerHTML = "";
+  }
+  parentElement?.insertAdjacentHTML(position, htmlStrings?.join(""));
+
 export function renderListWithTemplate(
   templateFn,
   parentElement,
