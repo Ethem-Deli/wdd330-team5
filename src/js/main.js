@@ -1,8 +1,11 @@
-// Import the utility function to load header and footer
 import { loadHeaderFooter } from "./utils.mjs";
-import "../css/style.css";
+import ProductData from "./ProductData.mjs";
+import ProductList from "./ProductList.mjs";
 
-// Load header and footer when the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", () => {
-  loadHeaderFooter();
-});
+loadHeaderFooter();
+
+const dataSource = new ProductData("tents");
+const element = document.querySelector(".product-list");
+const productList = new ProductList("Tents", dataSource, element);
+
+productList.init();

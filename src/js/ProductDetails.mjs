@@ -1,6 +1,7 @@
-import { getLocalStorage, setLocalStorage, getResponsiveImage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 export default class ProductDetails {
+
   constructor(productId, dataSource) {
     this.productId = productId;
     this.product = {};
@@ -8,19 +9,12 @@ export default class ProductDetails {
   }
 
   async init() {
-    // fetch product data
+    // use the datasource to get the details for the current product. findProductById will return a promise! use await or .then() to process it
     this.product = await this.dataSource.findProductById(this.productId);
-
-    if (!this.product) {
-      document.querySelector(".product-detail").innerHTML =
-        "<p>Product not found.</p>";
-      return;
-    }
-
-    // render page
+    // the product details are needed before rendering the HTML
     this.renderProductDetails();
-
-    // hook up Add to Cart button
+    // once the HTML is rendered, add a listener to the Add to Cart button
+    // Notice the .bind(this). This callback will not work if the bind(this) is missing. Review the readings from this week on "this" to understand why.
     document
       .getElementById("addToCart")
       .addEventListener("click", this.addProductToCart.bind(this));
@@ -28,19 +22,7 @@ export default class ProductDetails {
 
   addProductToCart() {
     const cartItems = getLocalStorage("so-cart") || [];
-    const productId = this.product.Id;
-
-    // check if already in cart
-    const existingIndex = cartItems.findIndex((item) => item.Id === productId);
-
-    if (existingIndex > -1) {
-      cartItems[existingIndex].Quantity =
-        (cartItems[existingIndex].Quantity || 1) + 1;
-    } else {
-      const newItem = { ...this.product, Quantity: 1 };
-      cartItems.push(newItem);
-    }
-
+    cartItems.push(this.product);
     setLocalStorage("so-cart", cartItems);
   }
 
@@ -50,43 +32,35 @@ export default class ProductDetails {
 }
 
 function productDetailsTemplate(product) {
-  const discountAmount = product.SuggestedRetailPrice - product.FinalPrice;
-  const isDiscounted = discountAmount > 0;
+  document.querySelector("h2").textContent = product.Brand.Name;
+  document.querySelector("h3").textContent = product.NameWithoutBrand;
 
-  // update ribbon
-  const ribbonElement = document.getElementById("discountRibbon");
-  if (ribbonElement) {
-    if (isDiscounted) {
-      ribbonElement.textContent = `SAVE $${discountAmount.toFixed(2)}!`;
-      ribbonElement.style.display = "block";
-    } else {
-      ribbonElement.style.display = "none";
-    }
-  }
-
-  // brand + name
-  document.querySelector("h3").textContent = product.Brand?.Name || "";
-  document.querySelector("h2.divider").textContent =
-    product.NameWithoutBrand || product.Name || "";
-
-  // image
   const productImage = document.getElementById("productImage");
-  productImage.src = getResponsiveImage(product);
-  productImage.alt = product.NameWithoutBrand || product.Name || "";
+  productImage.src = product.Image;
+  productImage.alt = product.NameWithoutBrand;
 
-  // prices
-  document.querySelector("#productFinalPrice").textContent = `$${product.FinalPrice}`;
-  document.querySelector("#productPrice").textContent = `$${product.SuggestedRetailPrice}`;
-  document.querySelector("#savePrice").textContent = isDiscounted
-    ? `You save $${discountAmount.toFixed(2)}`
-    : "";
+  document.getElementById("productPrice").textContent = product.FinalPrice;
+  document.getElementById("productColor").textContent = product.Colors[0].ColorName;
+  document.getElementById("productDesc").innerHTML = product.DescriptionHtmlSimple;
 
-  // color + description
-  document.querySelector("#productColor").textContent =
-    product.Colors?.[0]?.ColorName || "";
-  document.querySelector("#productDesc").innerHTML =
-    product.DescriptionHtmlSimple || product.Description || "";
-
-  // button
   document.getElementById("addToCart").dataset.id = product.Id;
 }
+
+// ************* Alternative Display Product Details Method *******************
+// function productDetailsTemplate(product) {
+//   return `<section class="product-detail"> <h3>${product.Brand.Name}</h3>
+//     <h2 class="divider">${product.NameWithoutBrand}</h2>
+//     <img
+//       class="divider"
+//       src="${product.Image}"
+//       alt="${product.NameWithoutBrand}"
+//     />
+//     <p class="product-card__price">$${product.FinalPrice}</p>
+//     <p class="product__color">${product.Colors[0].ColorName}</p>
+//     <p class="product__description">
+//     ${product.DescriptionHtmlSimple}
+//     </p>
+//     <div class="product-detail__add">
+//       <button id="addToCart" data-id="${product.Id}">Add to Cart</button>
+//     </div></section>`;
+// }
