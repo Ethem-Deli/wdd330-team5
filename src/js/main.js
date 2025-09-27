@@ -1,11 +1,30 @@
+
+import ProductData from "./ProductData.mjs";
+import ProductList from "./ProductList.mjs";
+import { loadHeaderFooter } from "./utils.mjs";
+
+// Load header and footer templates, and update cart count
+loadHeaderFooter();
+
+// Initialize product data and create a data source for tents (points to tents.json)
+const dataSource = new ProductData("tents");
+
+// Find the <ul class="product-list"> element in your index.html
+const listElement = document.querySelector(".product-list");
+
+// Create an instance of ProductList
+// parameter order: (category, dataSource, listElement)
+const productList = new ProductList("tents", dataSource, listElement);
+
+// Initialize it (this will fetch JSON + render products)
+productList.init();
+
 import { loadHeaderFooter } from "./utils.mjs";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 
-loadHeaderFooter();
+// Load header and footer when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", () => {
+  loadHeaderFooter();
+});
 
-const dataSource = new ProductData("tents");
-const element = document.querySelector(".product-list");
-const productList = new ProductList("Tents", dataSource, element);
-
-productList.init();

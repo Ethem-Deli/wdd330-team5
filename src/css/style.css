@@ -33,6 +33,7 @@ img {
 header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0.5rem;
 }
 
@@ -58,6 +59,12 @@ p {
 .logo a {
   text-decoration: none;
   color: var(--font-body);
+}
+
+.cart-icon {
+  width: 30px;
+  height: 30px;
+  fill: var(--dark-grey);
 }
 
 .hero {
@@ -210,6 +217,11 @@ button {
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+}
+
+.cart-card a {
+  text-decoration: none;
+  color: var(--dark-grey);
 }
 
 .cart-card__image {
