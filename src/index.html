@@ -6,12 +6,14 @@
     <title>Sleep Outside | Home</title>
     <link rel="stylesheet" href="./css/style.css" />
   </head>
-
   <body>
+    <header class="divider"></header>
+
 
     <header class="divider" id="header-template"></header>
 
     <header id="main-header" class="divider"></header>
+
     <main class="divider">
       <div class="hero">
         <img
@@ -30,34 +32,43 @@
           </p>
         </div>
       </div>
-
+      <div class="product-categories">
+        <a href="product_listing/index.html?category=tents"
+          ><img
+            src="https://byui-cse.github.io/wdd330-ww-course/images/category-tents.svg"
+            alt="tent"
+          />
+          <h2>Tents</h2></a
+        >
+        <a href="product_listing/index.html?category=backpacks"
+          ><img
+            src="https://byui-cse.github.io/wdd330-ww-course/images/category-backpacks.svg"
+            alt="backpack"
+          />
+          <h2>Backpacks</h2></a
+        >
+        <a href="product_listing/index.html?category=sleeping-bags"
+          ><img
+            src="https://byui-cse.github.io/wdd330-ww-course/images/category-sleepingbags.svg"
+            alt="sleeping bag"
+          />
+          <h2>Sleeping Bags</h2></a
+        >
+        <a href="product_listing/index.html?category=hammocks"
+          ><img
+            src="https://byui-cse.github.io/wdd330-ww-course/images/category-hammocks.svg"
+            alt="Hammock"
+          />
+          <h2>Hammocks</h2></a
+        >
+      </div>
       <section class="products">
         <h2>Top Products</h2>
         <ul class="product-list"></ul>
       </section>
-
-      <section class="categories">
-        <h2>Shop by Category</h2>
-        <div class="category-grid">
-          <a href="product_listing/index.html?category=tents">
-            <img src="./images/category-tents.svg" alt="Tents" />
-            <h3>Tents</h3>
-          </a>
-          <a href="product_listing/index.html?category=sleeping-bags">
-            <img src="./images/category-sleepingbags.svg" alt="Sleeping Bags" />
-            <h3>Sleeping Bags</h3>
-          </a>
-          <a href="product_listing/index.html?category=backpacks">
-            <img src="./images/category-backpacks.svg" alt="Backpacks" />
-            <h3>Backpacks</h3>
-          </a>
-          <a href="product_listing/index.html?category=hammocks">
-            <img src="./images/category-hammocks.svg" alt="Hammocks" />
-            <h3>Hammocks</h3>
-          </a>
-        </div>
-      </section>
     </main>
+    <footer></footer>
+
 
     <footer id="footer-template"></footer>
 
@@ -65,4 +76,5 @@
 
     <script type="module" src="./js/main.js"></script>
   </body>
+  <script src="./js/main.js" type="module"></script>
 </html>
