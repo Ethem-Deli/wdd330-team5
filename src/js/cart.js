@@ -120,7 +120,7 @@ document.querySelector(".product-list").addEventListener("click", (e) => {
   if (e.target.classList.contains("subtract")) {
     changeQuantity("subtract", e.target.dataset.id);
   }
-  if (e.target.classList.contains("remove-item")) {
+  if (e.target.classList.contains("remove")) {
     removeItem(e.target.dataset.id);
   }
 });
