@@ -2,17 +2,17 @@
 export function qs(selector, parent = document) {
   return parent.querySelector(selector);
 }
-// or a more concise version if you are into that sort of thing:
-// export const qs = (selector, parent = document) => parent.querySelector(selector);
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
   return JSON.parse(localStorage.getItem(key));
 }
+
 // save data to local storage
 export function setLocalStorage(key, data) {
   localStorage.setItem(key, JSON.stringify(data));
 }
+
 // set a listener for both touchend and click
 export function setClick(selector, callback) {
   qs(selector).addEventListener("touchend", (event) => {
@@ -25,26 +25,10 @@ export function setClick(selector, callback) {
 export function getParam(param) {
   const queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
-  const product = urlParams.get(param)
-  return product
-
   return urlParams.get(param);
 }
 
-// Rendering Helpers
-
-// -------------------------
-
-// render a list of items using a template function
-// inserts all items into a parentElement at a chosen position
-export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false) {
-  clear ? parentElement.innerHTML = "" : 0;
-  const htmlStrings = list?.map(templateFn);
-  if (clear) {
-    parentElement.innerHTML = "";
-  }
-  parentElement?.insertAdjacentHTML(position, htmlStrings?.join(""));
-
+// ✅ Only one clean version
 export function renderListWithTemplate(
   templateFn,
   parentElement,
@@ -61,29 +45,18 @@ export function renderListWithTemplate(
   parentElement.insertAdjacentHTML(position, htmlStrings.join(""));
 }
 
-export function renderListWithTemplate(templateFn, parentElement, list, position = "afterbegin", clear = false){
-        clear ? parentElement.innerHTML = "" : 0; 
-        const htmlStrings = list.map(templateFn);
-        if(clear){
-          parentElement.innerHTML = "";
-        };
-        parentElement.insertAdjacentHTML(position, htmlStrings.join(''));
-}
-
-export function renderWithTemplate(template, parentElement, data, callback){
+export function renderWithTemplate(template, parentElement, data, callback) {
   parentElement.innerHTML = template;
-  if(callback){
-    callback(data);
-  }
+  if (callback) callback(data);
 }
 
-export async function loadTemplate(path){
+export async function loadTemplate(path) {
   const item = await fetch(path);
-  const template = item.text();
+  const template = await item.text();
   return template;
 }
 
-export async function loadHeaderFooter (){
+export async function loadHeaderFooter() {
   const header = document.querySelector("header");
   const footer = document.querySelector("footer");
   const headerContent = await loadTemplate("../partials/header.html");
@@ -94,6 +67,7 @@ export async function loadHeaderFooter (){
 
   updateCartCount();
 }
+
 function updateCartCount() {
   const countElement = document.querySelector(".cart-count");
   const cart = JSON.parse(localStorage.getItem("so-cart")) || [];
@@ -105,40 +79,29 @@ function updateCartCount() {
 export function getLocalStorageItemIndex(array, attr, value) {
   let i = array.length;
   let indexNumber = 0;
-  while(i--) {
-    if( array[i] && array[i].hasOwnProperty(attr) && (arguments.length > 2 && array[i][attr] === value )){
+  while (i--) {
+    if (
+      array[i] &&
+      array[i].hasOwnProperty(attr) &&
+      arguments.length > 2 &&
+      array[i][attr] === value
+    ) {
       indexNumber = i;
     }
   }
   return indexNumber;
 }
 
-
 export function capitalizeFirstLetter(text) {
-    return String(text).charAt(0).toUpperCase() + String(text).slice(1);
-}  
-  
+  return String(text).charAt(0).toUpperCase() + String(text).slice(1);
+}
+
 export function productIsInArray(productId, array) {
-  let IsTrue = false
-  array.forEach(item => {
-    if (item.Id == productId) {
-      IsTrue = true;
-    } 
-  });
-  return IsTrue;
+  return array.some((item) => item.Id == productId);
 }
 
 export function findProductIndexInArrayById(productId, array) {
-  let i = 0;
-  let index = 0;
-  array.forEach(item => {
-    if (item.Id == productId) {
-      index = i;
-    } else {
-      i++;
-    }
-  });
-  return index;
+  return array.findIndex((item) => item.Id == productId);
 }
 
 export function removeLocalStorageKey(key) {
@@ -148,18 +111,12 @@ export function removeLocalStorageKey(key) {
 export function getResponsiveImage(product) {
   const width = window.innerWidth;
   let images = product.Images;
-  if (width < 600 && images?.PrimarySmall) {
-    return images.PrimarySmall;
-  }
-  if (width < 800 && images?.PrimaryMedium) {
-    return images.PrimaryMedium;
-  }
-  if (width < 1440 && images?.PrimaryLarge) {
-    return images.PrimaryLarge;
-  }
+  if (width < 600 && images?.PrimarySmall) return images.PrimarySmall;
+  if (width < 800 && images?.PrimaryMedium) return images.PrimaryMedium;
+  if (width < 1440 && images?.PrimaryLarge) return images.PrimaryLarge;
   return images?.PrimaryExtraLarge || product.PrimaryExtraLarge;
-
 }
+
 export function alertMessage(message, scroll = true) {
   const main = document.querySelector("main");
   const alert = document.createElement("div");
@@ -175,6 +132,7 @@ export function alertMessage(message, scroll = true) {
     alert.remove();
   }, 5000);
 }
+
 export function showAddedToCartMessage(productName) {
   alertMessage(`✅ ${productName} has been added to your cart!`);
 }

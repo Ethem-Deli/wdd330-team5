@@ -6,16 +6,11 @@ import {
   loadHeaderFooter,
   getResponsiveImage,
 } from "./utils.mjs";
-
-import { getLocalStorage } from "./utils.mjs";
 import CartList from "./shoppingCart.mjs";
 
 const listElement = document.querySelector(".cart-list");
 
 const cartList = new CartList("so-cart", listElement);
-
-import { loadHeaderFooter } from "./utils.mjs";
-loadHeaderFooter();
 
 function cartItemTemplate(item) {
   return `
