@@ -21,8 +21,6 @@ productList.init();
 
 // Import the utility function to load header and footer
 
-import { loadHeaderFooter } from "./utils.mjs";
-
 const alert = new Alert();
 alert.init();
 
