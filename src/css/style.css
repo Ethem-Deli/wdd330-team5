@@ -293,7 +293,7 @@ button {
     padding: 1rem;
     border-top: 1px solid var(--light-grey);
     text-align: center;
-    background-color: var(--primary-color);
+    background-color: white
   }
 
   .cart-total {
@@ -504,6 +504,8 @@ input:focus {
     grid-column: span 1;
   }
 }
+
+/* ===== Cart Badge ===== */
 .cart-badge {
   position: absolute;
   top: -8px;
@@ -514,41 +516,50 @@ input:focus {
   border-radius: 50%;
   padding: 2px 6px;
 }
+
 .cart-badge.hide {
   display: none;
 }
-.quantity-control-row {
+
+/* ===== Cart Layout ===== */
+.product-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
+  flex-direction: column; /* stack items vertically */
+  gap: 1.5rem; /* space between products */
+}
+
+.cart-card {
+  display: flex;
+  flex-direction: row; /* image + details + actions side by side */
   align-items: center;
-  gap: 0.5rem;
-  background: #f9f9f9;
-  padding: 0.3rem 0.8rem;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
   border-radius: 8px;
-  border: 1px solid #ddd;
-  width: fit-content;
 }
 
-.quantity-control-row .qty-btn {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 0.3rem 0.6rem;
+.cart-card img {
+  max-width: 120px;
+  height: auto;
   border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
 }
 
-.quantity-control-row .qty-btn:hover {
-  background: #1e40af;
+.cart-card__color {
+  font-size: 0.9rem;
+  color: #555;
 }
 
-.qty-text {
-  min-width: 30px;
-  text-align: center;
-  font-weight: 600;
+.cart-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-/* Quantity + Remove Controls */
+
+/* ===== Quantity + Remove Controls ===== */
 .quantity-control {
   display: flex;
   flex-direction: column;
@@ -590,7 +601,117 @@ input:focus {
   font-size: 0.95rem;
   font-weight: 600;
   color: #333;
+  min-width: 30px;
+  text-align: center;
 }
 
+/* ===== Checkout Button ===== */
+.checkout-btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border-radius: 50px; /* pill shape */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
 
-/* End cart list card styles */
+.checkout-btn:hover {
+  background: linear-gradient(135deg, #34d058, #28a745);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+}
+
+.checkout-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+}
+
+.checkout-btn::after {
+  content: "→";
+  position: absolute;
+  right: 20px;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.checkout-btn:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* ===== Alert Box ===== */
+.alert-box {
+  background: #dff0d8;
+  border: 1px solid #3c763d;
+  color: #3c763d;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+.alert-box.success {
+  background: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Error alert style */
+.error-message {
+  background: #f59e0b; /* orange background */
+  color: #111;         /* dark text */
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #d97706; /* darker orange border */
+}
+
+/* Optional close button */
+.error-message .close-btn {
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+/* Cart page product layout */
+/* Default: cart page = single column */
+.product-list {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Category/Product listing pages = grid */
+main.products .product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+/* Product listing pages: show products in a 3x3 grid */
+section.products .product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cart page: show products 1 per line */
+body.cart-page .product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

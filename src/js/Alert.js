@@ -13,6 +13,7 @@ export default class Alert {
         this.renderAlerts(alerts);
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error("Alert error:", err);
     }
   }
@@ -37,4 +38,3 @@ export default class Alert {
     }
   }
 }
-//

@@ -1,32 +1,53 @@
-import Alert from "./Alert";
+import Alert from "./Alert.js";
 import ProductData from "./ProductData.mjs";
 import ProductList from "./ProductList.mjs";
 import { loadHeaderFooter } from "./utils.mjs";
+import Cart from "./cart.js";
 
-// Load header and footer templates, and update cart count
-loadHeaderFooter();
+document.addEventListener("DOMContentLoaded", async () => {
+  await loadHeaderFooter();
 
-// Initialize product data and create a data source for tents (points to tents.json)
-const dataSource = new ProductData("tents");
+  const alert = new Alert();
+  alert.init();
 
-// Find the <ul class="product-list"> element in your index.html
-const listElement = document.querySelector(".product-list");
+  const pathname = window.location.pathname;
 
-// Create an instance of ProductList
-// parameter order: (category, dataSource, listElement)
-const productList = new ProductList("tents", dataSource, listElement);
+  // Cart page
+  if (pathname.includes("cart")) {
+    const listElement = document.querySelector(".product-list");
+    if (listElement) {
+      const cart = new Cart("so-cart", listElement);
+      cart.init();
+    }
+  }
 
-// Initialize it (this will fetch JSON + render products)
-productList.init();
+  // Category pages
+  if (
+    pathname.includes("tents") ||
+    pathname.includes("sleeping-bags") ||
+    pathname.includes("hammocks")
+  ) {
+    const category = pathname.split("/").slice(-2, -1)[0]; 
+    const dataSource = new ProductData(category);
+    const listElement = document.querySelector(".product-list");
 
-// Import the utility function to load header and footer
+    if (listElement) {
+      const productList = new ProductList(category, dataSource, listElement);
+      productList.init();
+    }
+  }
 
-const alert = new Alert();
-alert.init();
+  // Product detail pages
+  if (pathname.includes("product_pages")) {
+    const { default: ProductDetails } = await import("./ProductDetails.mjs");
+    const ProductDataModule = (await import("./ProductData.mjs")).default;
 
-loadHeaderFooter();
+    const productId = new URLSearchParams(window.location.search).get("product");
 
-// Load header and footer when the DOM is fully loaded
-document.addEventListener("DOMContentLoaded", () => {
-  loadHeaderFooter();
+    if (productId) {
+      const dataSource = new ProductDataModule("tents"); 
+      const productDetails = new ProductDetails(productId, dataSource);
+      productDetails.init();
+    }
+  }
 });

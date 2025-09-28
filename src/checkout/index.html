@@ -8,6 +8,7 @@
   <script src="../js/checkout.js" type="module"></script>
 </head>
 <body>
+  <!-- Header will be injected -->
   <header class="divider" id="main-header"></header>
 
   <main class="checkout">
@@ -55,13 +56,15 @@
           <input type="text" name="code" id="code" required />
         </fieldset>
 
-        <button type="submit" id="checkoutSubmit">Place Order</button>
+        <button type="submit" id="checkoutSubmit" class="checkout-button">
+          Place Order
+        </button>
       </form>
     </section>
 
     <!-- Right Side: Order Summary -->
     <section class="checkout-summary">
-      <legend>Order Summary</legend>
+      <h3>Order Summary</h3>
       <div class="order__summary">
         <div>Items</div>
         <div id="num-items">0</div>
@@ -81,34 +84,7 @@
     </section>
   </main>
 
+  <!-- Footer will be injected -->
   <footer id="main-footer"></footer>
 </body>
-
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sleep Outside | Checkout</title>
-    <link rel="stylesheet" href="../css/style.css" />
-  </head>
-
-  <body>
-
-    <header class="divider" id="header-template"></header>
-    <header id="main-header" class="divider"></header>
-
-
-    <main class="divider">
-      <section class="cart">
-        <h2>Review & Place your Order</h2>
-        <ul class="product-list"></ul>
-      </section>
-    </main>
-
-
-    <footer id="footer-template"></footer>
-
-    <footer id="main-footer"></footer>
-
-    <script type="module" src="../js/main.js"></script>
-  </body>
 </html>
