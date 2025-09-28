@@ -56,6 +56,7 @@ function productDetailsTemplate(product) {
     const ribbonElement = document.getElementById('discountRibbon');
     if (isDiscounted) {
         ribbonElement.textContent = `SAVE $${discountAmount.toFixed(2)}!`;
+        
         ribbonElement.style.display = 'block';
     } else {
         ribbonElement.style.display = 'none';
