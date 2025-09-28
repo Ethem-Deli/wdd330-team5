@@ -136,3 +136,4 @@ export function alertMessage(message, scroll = true) {
 export function showAddedToCartMessage(productName) {
   alertMessage(`✅ ${productName} has been added to your cart!`);
 }
+// ✅ New function to show "added to cart" message
