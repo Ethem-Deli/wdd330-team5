@@ -21,19 +21,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Category/product-listing pages
+  // Category/product-listing page
   if (pathname.includes("product_listing")) {
     const params = new URLSearchParams(window.location.search);
-    const category = params.get("category");
+    // get category from ?category= OR default to tents
+    const category = params.get("category") || "tents";
 
-    if (category) {
-      const dataSource = new ProductData(category);
-      const listElement = document.querySelector(".product-list");
+    const dataSource = new ProductData(category);
+    const listElement = document.querySelector(".product-list");
 
-      if (listElement) {
-        const productList = new ProductList(category, dataSource, listElement);
-        productList.init();
-      }
+    if (listElement) {
+      const productList = new ProductList(category, dataSource, listElement);
+      productList.init();
     }
   }
 
@@ -42,13 +41,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const { default: ProductDetails } = await import("./ProductDetails.mjs");
     const ProductDataModule = (await import("./ProductData.mjs")).default;
 
-    const productId = new URLSearchParams(window.location.search).get("product");
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("product");
+    const category = params.get("category") || "tents";
 
     if (productId) {
-      // Default to "tents" category if none is specified in the URL
-      const category = new URLSearchParams(window.location.search).get("category") || "tents";
       const dataSource = new ProductDataModule(category);
-
       const productDetails = new ProductDetails(productId, dataSource);
       productDetails.init();
     }
