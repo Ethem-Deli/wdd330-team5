@@ -21,19 +21,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Category pages
-  if (
-    pathname.includes("tents") ||
-    pathname.includes("sleeping-bags") ||
-    pathname.includes("hammocks")
-  ) {
-    const category = pathname.split("/").slice(-2, -1)[0]; 
-    const dataSource = new ProductData(category);
-    const listElement = document.querySelector(".product-list");
+  // Category/product-listing pages
+  if (pathname.includes("product_listing")) {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
 
-    if (listElement) {
-      const productList = new ProductList(category, dataSource, listElement);
-      productList.init();
+    if (category) {
+      const dataSource = new ProductData(category);
+      const listElement = document.querySelector(".product-list");
+
+      if (listElement) {
+        const productList = new ProductList(category, dataSource, listElement);
+        productList.init();
+      }
     }
   }
 
@@ -45,7 +45,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const productId = new URLSearchParams(window.location.search).get("product");
 
     if (productId) {
-      const dataSource = new ProductDataModule("tents"); 
+      // Default to "tents" category if none is specified in the URL
+      const category = new URLSearchParams(window.location.search).get("category") || "tents";
+      const dataSource = new ProductDataModule(category);
+
       const productDetails = new ProductDetails(productId, dataSource);
       productDetails.init();
     }
