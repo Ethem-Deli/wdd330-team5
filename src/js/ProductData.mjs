@@ -8,6 +8,10 @@ function convertToJson(res) {
   }
 }
 
+// Base URL for server - can be changed in the .env file
+const baseURL = import.meta.env.VITE_SERVER_URL; //from .env file
+
+// Class to handle fetching product data
 export default class ProductData {
   constructor() {
     // Always served from /json/... because it's inside public/

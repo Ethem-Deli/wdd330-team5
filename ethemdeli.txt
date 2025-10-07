@@ -2,7 +2,7 @@ Team 5
 Ethem Deli
 
 
-Task: Dynamic product list.
+Task: Discount indicator-product listing
 Source: https://github.com/Ethem-Deli/wdd330-team5
-Site: https://deploy-preview-7--cozy-monstera-f5c5a0.netlify.app/
+Site: https://deploy-preview-13--cozy-monstera-f5c5a0.netlify.app/
 netlify: https://cozy-monstera-f5c5a0.netlify.app/

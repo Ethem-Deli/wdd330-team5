@@ -1,6 +1,4 @@
 @import "discount.css";
-
-/* Variables */
 :root {
   --font-body: Arial, Helvetica, sans-serif;
   --font-headline: Haettenschweiler, "Arial Narrow Bold", sans-serif;
@@ -85,6 +83,7 @@ p {
   font-size: var(--small-font);
   width: 110px;
   height: 80px;
+
   flex-direction: column;
   align-items: flex-end;
   box-shadow: 1px 1px 4px var(--light-grey);
@@ -125,6 +124,23 @@ button {
 
 /* End utility classes */
 
+/* Cart icon styles */
+.cart {
+  padding-top: 1em;
+  position: relative;
+  text-align: center;
+}
+
+.cart svg {
+  width: 25px;
+}
+
+.cart:hover svg {
+  fill: gray;
+}
+
+/* End cart icon styles */
+
 .mission {
   position: absolute;
   top: 1rem;
@@ -146,13 +162,6 @@ button {
 .products {
   margin-top: 2rem;
   padding: 1rem;
-}
-
-.product-list {
-  display: flex;
-  flex-flow: row wrap;
-  list-style-type: none;
-  justify-content: center;
 }
 
 .product-list a {
@@ -197,10 +206,14 @@ button {
 
 /* Start cart list card styles */
 .cart-card {
-  display: grid;
-  grid-template-columns: 25% auto 15%;
-  font-size: var(--small-font);
+  display: flex;
+  flex-direction: row; /* latest definition kept */
   align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+  border-radius: 8px;
 }
 
 .cart-card a {
@@ -208,9 +221,15 @@ button {
   color: var(--dark-grey);
 }
 
-.cart-card__image {
-  grid-row: 1/3;
-  grid-column: 1;
+.cart-card img {
+  max-width: 120px;
+  height: auto;
+  border-radius: 6px;
+}
+
+.cart-card__color {
+  font-size: 0.9rem;
+  color: #555;
 }
 
 .cart-card p {
@@ -219,11 +238,6 @@ button {
 
 .cart-card .card__name {
   grid-row: 1;
-  grid-column: 2;
-}
-
-.cart-card__color {
-  grid-row: 2;
   grid-column: 2;
 }
 
@@ -280,16 +294,11 @@ button {
     font-size: 1.2em;
   }
 
-  .cart-card {
-    font-size: inherit;
-    grid-template-columns: 150px auto 15%;
-  }
-
   .cart-footer {
     padding: 1rem;
     border-top: 1px solid var(--light-grey);
     text-align: center;
-    background-color: var(--primary-color);
+    background-color: white;
   }
 
   .cart-total {
@@ -368,18 +377,309 @@ footer {
   font-size: large;
   user-select: none;
 }
+/* ===== Checkout Page Layout ===== */
+.checkout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
 
-.product-card__priceDiscount,
-.product-card__priceSaved,
-.product-card__price {
+.checkout-title {
+  grid-column: span 2;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #222;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+/* ===== Left: Form Box ===== */
+.checkout-form {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.checkout-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+fieldset {
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+}
+
+legend {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  padding: 0 0.3rem;
+}
+
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.8rem;
+  margin-bottom: 0.2rem;
+  color: #444;
+}
+
+input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  transition: border 0.25s, box-shadow 0.25s;
+}
+
+input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Submit Button */
+#checkoutSubmit {
+  margin-top: 1rem;
+  background: linear-gradient(135deg, #2563eb, #3b82f6);
+  color: white;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.1s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+}
+
+#checkoutSubmit:hover {
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+}
+
+#checkoutSubmit:active {
+  transform: scale(0.97);
+}
+
+/* ===== Right: Order Summary Box ===== */
+.checkout-summary {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  height: fit-content;
+}
+
+.order__summary {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  row-gap: 0.75rem;
+  font-size: 1rem;
+  color: #555;
+}
+
+.order__summary div:nth-child(even) {
+  text-align: right;
+}
+
+.order__summary div:last-child {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #111;
+}
+
+/* ===== Responsive Layout ===== */
+@media (max-width: 800px) {
+  .checkout {
+    grid-template-columns: 1fr;
+  }
+  .checkout-title {
+    grid-column: span 1;
+  }
+}
+
+/* ===== Cart Badge ===== */
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: red;
+  color: white;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+.cart-badge.hide {
+  display: none;
+}
+
+/* ===== Cart Layout ===== */
+.product-list {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Category/Product listing pages = grid */
+main.products .product-list,
+section.products .product-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Cart page: show products 1 per line */
+body.cart-page .product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ===== Quantity + Remove Controls ===== */
+.cart-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.quantity-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.qty-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.6rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  width: 40px;
   text-align: center;
 }
-.product-card__priceDiscount {
-  color: red;
-  font-weight: bold;
+
+.qty-btn:hover {
+  background: #1e40af;
 }
-.product-card__priceSaved {
-  color: green;
-  font-weight: bold;
+
+.qty-btn:active {
+  transform: scale(0.95);
 }
-/* End cart list card styles */
+
+.qty-btn.remove {
+  background: #dc2626; /* Red for remove */
+}
+
+.qty-btn.remove:hover {
+  background: #b91c1c;
+}
+
+.qty-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* ===== Checkout Button ===== */
+.checkout-btn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border-radius: 50px; /* pill shape */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.checkout-btn:hover {
+  background: linear-gradient(135deg, #34d058, #28a745);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.3);
+}
+
+.checkout-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+}
+
+.checkout-btn::after {
+  content: "→";
+  position: absolute;
+  right: 20px;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.checkout-btn:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+/* ===== Alert Box ===== */
+.alert-box {
+  background: #dff0d8;
+  border: 1px solid #3c763d;
+  color: #3c763d;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+.alert-box.success {
+  background: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+/* Error alert style */
+.error-message {
+  background: #f59e0b; /* orange background */
+  color: #111;         /* dark text */
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #d97706; /* darker orange border */
+}
+
+/* Optional close button */
+.error-message .close-btn {
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 1rem;
+}
