@@ -425,7 +425,9 @@ input {
   border-radius: 8px;
   font-size: 1rem;
   background: #fff;
-  transition: border 0.25s, box-shadow 0.25s;
+  transition:
+    border 0.25s,
+    box-shadow 0.25s;
 }
 
 input:focus {
@@ -445,7 +447,9 @@ input:focus {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.1s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.3s ease;
   box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
 }
 
@@ -560,7 +564,9 @@ body.cart-page .product-list {
   border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition:
+    background 0.2s,
+    transform 0.1s;
   width: 40px;
   text-align: center;
 }
@@ -650,7 +656,7 @@ body.cart-page .product-list {
 /* Error alert style */
 .error-message {
   background: #f59e0b; /* orange background */
-  color: #111;         /* dark text */
+  color: #111; /* dark text */
   padding: 0.75rem 1rem;
   margin: 0.5rem 0;
   border-radius: 6px;

@@ -78,7 +78,7 @@ export default class Cart {
 
     const totalAmount = document.querySelector(".cart-total");
     if (totalAmount) {
-      totalAmount.textContent = total.toFixed(2);
+      totalAmount.textContent = `Total: $${total.toFixed(2)}`;
       cartFooter.classList.remove("hide");
     }
   }
