@@ -4,7 +4,7 @@ import CheckoutProcess from "./CheckoutProcess.mjs";
 loadHeaderFooter();
 
 function displayError(message) {
-  const container = document.querySelector(".checkout-form"); 
+  const container = document.querySelector(".checkout-form");
   if (!container) return;
 
   const errorBox = document.createElement("div");
